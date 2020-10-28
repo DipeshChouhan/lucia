@@ -9,6 +9,7 @@ interface VNode {
   children: Record<string, VNode | string>[];
 }
 
+// Needs refactor
 class VDom {
   $vdom: VNode | null;
   $view: ProxyConstructor | Record<string, any> | any;
