@@ -1,8 +1,8 @@
-import DomNode from './DomNode';
+import VDomNode from './VDomNode';
 import IEventHandler from './IEventHandler';
 
 export default interface IDomEvent {
-  target: DomNode;
+  target: VDomNode;
   propName: string;
   callback: IEventHandler;
 }
