@@ -1,6 +1,6 @@
 /**
  * @file fnv.ts
- * @copyright (c) 2020 the lucia project
+ * @copyright (c) 2020 The Lucia Authors
  */
 
 const FNV_PRIME = 0x01000193;
