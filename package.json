@@ -10,7 +10,8 @@
     "build:src": "del-cli dist/ && rollup -c",
     "build:docs": "typedoc --out docs src",
     "test": "jest --coverage",
-    "cleanup": "prettier -w src"
+    "cleanup": "prettier -w src",
+    "coverage" : "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -43,6 +44,7 @@
     "@rollup/plugin-babel": "5.0.3",
     "@rollup/plugin-commonjs": "13.0.0",
     "@rollup/plugin-node-resolve": "8.0.1",
+    "coveralls": "^3.1.0",
     "del-cli": "^3.0.1",
     "jest": "^26.6.1",
     "prettier": "^2.1.2",
