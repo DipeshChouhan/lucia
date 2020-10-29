@@ -13,17 +13,16 @@ const FNV_OFFSET_BASIS = 0x811c9dc5;
  */
 export default function fnv_1(val: number[] | Uint8Array, variant1a: boolean = false): number {
   let hash = FNV_OFFSET_BASIS;
-  if (!variant1a) {
-    val.forEach((byte: number) => {
+  
+  val.forEach((byte: number) => {
+    if (!variant1a) {
       hash *= FNV_PRIME;
       hash ^= byte;
-    });
-  } else {
-    val.forEach((byte: number) => {
+    } else {
       hash ^= byte;
       hash *= FNV_PRIME;
-    });
-  }
+    }
+  });
 
   return hash;
 }
