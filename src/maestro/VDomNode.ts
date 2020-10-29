@@ -94,9 +94,7 @@ export default class VDomNode {
   }
 
   private static attributesToProps(attrs: NamedNodeMap): Map<string, string> {
-    return new Map<string, string>(
-      Array(attrs.length).map((i) => [attrs[i].name, attrs[i].value])
-    );
+    return new Map<string, string>(Array(attrs.length).map((i) => [attrs[i].name, attrs[i].value]));
   }
 
   public static fromHTMLElement(elem: HTMLElement): VDomNode {

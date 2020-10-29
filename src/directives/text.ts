@@ -10,7 +10,7 @@ export const textDirective = (
 
   if (out !== undefined) {
     el.textContent = out;
-  } else { 
+  } else {
     el.textContent = value;
   }
 };

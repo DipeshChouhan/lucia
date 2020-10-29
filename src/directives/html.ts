@@ -10,7 +10,7 @@ export const htmlDirective = (
 
   if (out !== undefined) {
     el.innerHTML = out;
-  } else { 
+  } else {
     el.innerHTML = value;
   }
 };
