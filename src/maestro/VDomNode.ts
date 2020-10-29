@@ -1,5 +1,5 @@
 import IDomEvent from './IDomEvent';
-import fnv_1 from './lib/fnv';
+import fnv_1 from './helpers/fnv';
 
 type VDomNodeProps = {
   tagName: string;
@@ -93,9 +93,9 @@ export default class VDomNode {
     return this.rendered;
   }
 
-  private static attributesToProps(attribs: NamedNodeMap): Map<string, string> {
+  private static attributesToProps(attrs: NamedNodeMap): Map<string, string> {
     return new Map<string, string>(
-      Array(attribs.length).map((i) => [attribs[i].name, attribs[i].value])
+      Array(attrs.length).map((i) => [attrs[i].name, attrs[i].value])
     );
   }
 

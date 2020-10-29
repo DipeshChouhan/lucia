@@ -10,7 +10,7 @@
     "build:src": "del-cli dist/ && rollup -c",
     "build:docs": "typedoc --out docs src",
     "test": "jest --coverage",
-    "prettify": "prettier -w src"
+    "cleanup": "prettier -w src"
   },
   "repository": {
     "type": "git",
