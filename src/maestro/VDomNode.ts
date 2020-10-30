@@ -147,6 +147,10 @@ export default class VDomNode {
     this.tainted = true;
   }
 
+  get props() {
+    return this._props;
+  }
+
   /**
    * Add a child to the node
    * @param child the DomNode to add as a child to this node
@@ -181,7 +185,7 @@ export default class VDomNode {
     this.rendered = document.createElement(this._tagName);
     this.rendered.id = this._htmlId?.join(' ') || this.uniqueKey.toString();
     this.rendered.className = this._className?.join(' ') || '';
-    this._props?.forEach((k, v) => {
+    this.props?.forEach((k, v) => {
       this.rendered!.setAttribute(k, v);
     });
     this.rendered.innerText = this.innerText || '';
