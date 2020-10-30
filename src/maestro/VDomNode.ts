@@ -44,7 +44,6 @@ export default class VDomNode {
     public key?: number,
     eventHandlers?: IDomEvent[],
     private tainted: boolean = false,
-    private clean: boolean = false,
     parent?: VDomNode,
     children?: VDomNode[]
   ) {
@@ -62,7 +61,7 @@ export default class VDomNode {
 
   public isLeaf = () => !this.children;
   public isRoot = () => !this._parent;
-  public needsRender = () => !this.clean || this.tainted;
+  public needsRender = () => this.tainted;
   public isTainted = () => this.tainted;
   // TODO: figure out what to hash
   public uniqueKey = () => this.key || fnv_1([0]);
@@ -190,7 +189,6 @@ export default class VDomNode {
     this.children?.forEach((child) => {
       this.rendered!.appendChild(child.render());
     });
-    this.clean = true;
     this.tainted = false;
     return this.rendered;
   }
