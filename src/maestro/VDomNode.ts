@@ -73,6 +73,56 @@ export default class VDomNode {
   }
 
   /**
+   * Change this node's text content
+   * @param value the value to set as the textContent
+   */
+
+  public setTextContent(value: string): void {
+    this.textContent = value;
+    this.tainted = true;
+  }
+
+  /**
+   * Change this node's tag name
+   * @param value the value to set as the tagName
+   */
+
+  public setTagName(value: string): void {
+    this.tagName = value;
+    this.tainted = true;
+  }
+
+  /**
+   * Change this node's node value
+   * @param value the value to set as the nodeValue
+   */
+
+  public setNodeValue(value: string): void {
+    this.nodeValue = value;
+    this.tainted = true;
+  }
+
+  /**
+   * Change this node's inner text
+   * @param value the value to set as the innerText
+   */
+
+  public setInnerText(value: string): void {
+    this.innerText = value;
+    this.tainted = true;
+  }
+
+  /**
+   * Change this node's html id
+   * @param value the value to set as the htmlId
+   */
+
+  public setHtmlId(value: string[]): void {
+    this.htmlId = value;
+    this.tainted = true;
+  }
+
+  /**
    * Render this node if rendering is needed return the already rendered node otherwise
    */
   public render(): HTMLElement {
