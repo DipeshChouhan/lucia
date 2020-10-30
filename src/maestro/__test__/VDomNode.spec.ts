@@ -52,11 +52,11 @@ describe('VDomNode', () => {
     expect(node.isLeaf()).toBe(true);
   });
   it('should not need render', () => {
-    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false, true);
+    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false);
     expect(node.needsRender()).toBe(false);
   });
   it('should need a render', () => {
-    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, true, false);
+    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, true);
     expect(node.needsRender()).toBe(true);
   });
 });
