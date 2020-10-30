@@ -2,101 +2,106 @@ import VDomNode from '../VDomNode';
 
 describe('VDomNode', () => {
   it('should create without errors', () => {
-    new VDomNode('div');
+    new VDomNode({ tagName: 'div' });
   });
   it('should return the key', () => {
-    const node = new VDomNode(
-      'div',
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      453
-    );
-    expect(node.key).toBe(453);
+    const node = new VDomNode({
+      tagName: 'div',
+      key: 453,
+    });
     expect(node.uniqueKey()).toBe(453);
   });
   it('should return a random hash', () => {
-    const node = new VDomNode('div');
-    expect(node.key).toBe(undefined);
+    const node = new VDomNode({ tagName: 'div' });
     expect(node.uniqueKey()).toBe(84696352);
   });
-  it('tainted should be false', () => {
-    const node = new VDomNode('div');
-    expect(node.isTainted()).toBe(false)
-  })
+  it('tainted should be true', () => {
+    const node = new VDomNode({ tagName: 'div' });
+    expect(node.needsRender()).toBe(true);
+  });
   it('should append a child', () => {
-    const node = new VDomNode('div');
-    const child = new VDomNode('div');
+    const node = new VDomNode({ tagName: 'div' });
+    const child = new VDomNode({ tagName: 'div' });
     node.appendChild(child);
     expect(node.children).toEqual([child]);
-    expect(node.isTainted()).toBe(true);
+    expect(node.needsRender()).toBe(true);
     expect(child.parent).toEqual(node);
-    const child2 = new VDomNode('div');
+    const child2 = new VDomNode({ tagName: 'div' });
     node.appendChild(child2);
     expect(node.children).toEqual([child, child2]);
-    expect(node.isTainted()).toBe(true);
+    expect(node.needsRender()).toBe(true);
     expect(child2.parent).toEqual(node);
   });
   it('should set the parent', () => {
-    const node = new VDomNode('div');
-    const child = new VDomNode('div');
+    const node = new VDomNode({ tagName: 'div' });
+    const child = new VDomNode({ tagName: 'div' });
     child.setParent(node);
     expect(child.parent).toEqual(node);
-    expect(node.isTainted()).toBe(true);
+    expect(node.needsRender()).toBe(true);
     expect(node.children).toEqual([child]);
   });
   it('should be the root', () => {
-    const node = new VDomNode('div');
+    const node = new VDomNode({ tagName: 'div' });
     expect(node.isRoot()).toBe(true);
   });
   it('should be a leaf', () => {
-    const node = new VDomNode('div');
+    const node = new VDomNode({ tagName: 'div' });
     expect(node.isLeaf()).toBe(true);
   });
   it('should not need render', () => {
-    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, false);
+    const node = new VDomNode({ tagName: 'div', tainted: false });
     expect(node.needsRender()).toBe(false);
   });
   it('should need a render', () => {
-    const node = new VDomNode('div', undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, true);
+    const node = new VDomNode({ tagName: 'div' });
     expect(node.needsRender()).toBe(true);
   });
   it('should set tainted to true', () => {
-    let node = new VDomNode('div');
+    let node = new VDomNode({ tagName: 'div' });
     node.tagName = 'span';
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.textContent = 'Foo!';
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.nodeValue = 'Bar!';
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.innerText = 'Foobar!';
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.htmlId = ['id-here'];
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.className = ['class-here'];
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
     node.eventHandlers = [];
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
-    node.parent = new VDomNode('div');
-    expect(node.isTainted()).toBe(true);
-    node = new VDomNode('div');
-    node.children = [new VDomNode('div')];
-    expect(node.isTainted()).toBe(true);
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
+    node.parent = new VDomNode({ tagName: 'div' });
+    expect(node.needsRender()).toBe(true);
+    node = new VDomNode({ tagName: 'div' });
+    node.children = [new VDomNode({ tagName: 'div' })];
+    expect(node.needsRender()).toBe(true);
   });
   it('should have getters working properly', () => {
-    const parent = new VDomNode('div');
-    const child = new VDomNode('div');
-    const node = new VDomNode('div', 'Text Content', 'Node Value', 'Inner Text', ['html', 'id'], ['class', 'name'], undefined, undefined, [], false, parent, [child]);
+    const parent = new VDomNode({ tagName: 'div' });
+    const child = new VDomNode({ tagName: 'div' });
+    const node = new VDomNode({
+      tagName: 'div',
+      textContent: 'Text Content',
+      nodeValue: 'Node Value',
+      innerText: 'Inner Text',
+      htmlId: ['html', 'id'],
+      className: ['class', 'name'],
+      parent: parent,
+      children: [child],
+      props: undefined,
+      key: undefined,
+      eventHandlers: [],
+      tainted: false,
+    });
     expect(node.tagName).toBe('div');
     expect(node.textContent).toBe('Text Content');
     expect(node.nodeValue).toBe('Node Value');
@@ -124,7 +129,18 @@ describe('VDomNode', () => {
     expect(node.className).toEqual(['class', 'name']);
   });
   it('should render properly', () => {
-    const node = new VDomNode('div', 'Text Content', 'Node Value', 'Inner Text', ['html', 'id'], ['class', 'name'], undefined, undefined, [], false);
+    const node = new VDomNode({
+      tagName: 'div',
+      textContent: 'Text Content',
+      nodeValue: 'Node Value',
+      innerText: 'Inner Text',
+      htmlId: ['html', 'id'],
+      className: ['class', 'name'],
+      props: undefined,
+      key: undefined,
+      eventHandlers: [],
+      tainted: false,
+    });
     const elem = document.createElement('div');
     elem.textContent = 'Text Content';
     elem.nodeValue = 'Node Value';
