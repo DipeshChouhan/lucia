@@ -22,22 +22,37 @@ type VDomNodeProps = {
  */
 export default class VDomNode {
   private rendered: HTMLElement | null = null;
+  private tagName: string;
+  private textContent: string | undefined;
+  private nodeValue: string | undefined;
+  private innerText: string | undefined;
+  private htmlId: string[] | undefined;
+  private className: string[] | undefined;
+  private props: Map<string, string> | undefined;
 
   constructor(
-    public tagName: string,
-    public textContent?: string,
-    public nodeValue?: string,
-    public innerText?: string,
-    public htmlId?: string[],
-    public className?: string[],
-    public props?: Map<string, string>,
+    tagName: string,
+    textContent?: string,
+    nodeValue?: string,
+    innerText?: string,
+    htmlId?: string[],
+    className?: string[],
+    props?: Map<string, string>,
     public key?: number,
     public eventHandlers?: IDomEvent[],
     private tainted: boolean = false,
     private clean: boolean = false,
     public parent?: VDomNode,
     public children?: VDomNode[]
-  ) {}
+  ) {
+    this.tagName = tagName;
+    this.textContent = textContent;
+    this.nodeValue = nodeValue;
+    this.innerText = innerText;
+    this.htmlId = htmlId;
+    this.className = className;
+    this.props = props;
+  }
 
   public isLeaf = () => !this.children;
   public isRoot = () => !this.parent;
@@ -70,76 +85,6 @@ export default class VDomNode {
   public setParent(parent: VDomNode): void {
     this.parent = parent;
     parent.appendChild(this);
-  }
-
-  /**
-   * Change this node's text content
-   * @param value the value to set as the textContent
-   */
-
-  public setTextContent(value: string): void {
-    this.textContent = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's tag name
-   * @param value the value to set as the tagName
-   */
-
-  public setTagName(value: string): void {
-    this.tagName = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's node value
-   * @param value the value to set as the nodeValue
-   */
-
-  public setNodeValue(value: string): void {
-    this.nodeValue = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's inner text
-   * @param value the value to set as the innerText
-   */
-
-  public setInnerText(value: string): void {
-    this.innerText = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's html id
-   * @param value the value to set as the htmlId
-   */
-
-  public setHtmlId(value: string[]): void {
-    this.htmlId = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's class names
-   * @param value the value to set as the className
-   */
-
-  public setClassName(value: string[]): void {
-    this.className = value;
-    this.tainted = true;
-  }
-
-  /**
-   * Change this node's properties
-   * @param value the value to set as the properties
-   */
-
-  public setProps(value: Map<string, string>): void {
-    this.props = value;
-    this.tainted = true;
   }
 
   /**
