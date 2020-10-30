@@ -206,7 +206,7 @@ export default class VDomNode {
       innerText: elem.innerText || undefined,
       htmlId: elem.id.split(' '),
       className: elem.className.split(' '),
-      props: VDomNode.attributesToProps(elem.attributes),
+      props: elem.hasAttributes() ? VDomNode.attributesToProps(elem.attributes) : undefined,
     };
 
     return new VDomNode(
