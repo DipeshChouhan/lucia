@@ -43,4 +43,12 @@ describe('VDomNode', () => {
     expect(node.isTainted()).toBe(true);
     expect(node.children).toEqual([child]);
   });
+  it('should be the root', () => {
+    const node = new VDomNode('div');
+    expect(node.isRoot()).toBe(true);
+  });
+  it('should be a leaf', () => {
+    const node = new VDomNode('div');
+    expect(node.isLeaf()).toBe(true);
+  });
 });
