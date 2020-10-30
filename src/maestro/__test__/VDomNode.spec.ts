@@ -35,4 +35,12 @@ describe('VDomNode', () => {
     expect(node.isTainted()).toBe(true);
     expect(child.parent).toEqual(node);
   });
+  it('should set the parent', () => {
+    const node = new VDomNode('div');
+    const child = new VDomNode('div');
+    child.setParent(node);
+    expect(child.parent).toEqual(node);
+    expect(node.isTainted()).toBe(true);
+    expect(node.children).toEqual([child]);
+  });
 });
