@@ -107,4 +107,20 @@ describe('VDomNode', () => {
     expect(node.parent).toEqual(parent);
     expect(node.children).toEqual([child]);
   });
+  it('should properly copy an html element', () => {
+    const elem = document.createElement('div');
+    elem.textContent = 'Text Content';
+    elem.nodeValue = 'Node Value';
+    elem.innerText = 'Inner Text';
+    elem.id = 'html id';
+    elem.className = 'class name';
+    elem.hasAttributes = () => false;
+    const node = VDomNode.fromHTMLElement(elem);
+    expect(node.tagName).toBe('div');
+    expect(node.textContent).toBe('Text Content');
+    expect(node.nodeValue).toBe(undefined);
+    expect(node.innerText).toBe('Inner Text');
+    expect(node.htmlId).toEqual(['html', 'id']);
+    expect(node.className).toEqual(['class', 'name']);
+  });
 });
