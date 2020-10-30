@@ -123,6 +123,26 @@ export default class VDomNode {
   }
 
   /**
+   * Change this node's class names
+   * @param value the value to set as the className
+   */
+
+  public setClassName(value: string[]): void {
+    this.className = value;
+    this.tainted = true;
+  }
+
+  /**
+   * Change this node's properties
+   * @param value the value to set as the properties
+   */
+
+  public setProps(value: Map<string, string>): void {
+    this.props = value;
+    this.tainted = true;
+  }
+
+  /**
    * Render this node if rendering is needed return the already rendered node otherwise
    */
   public render(): HTMLElement {
