@@ -1,11 +1,11 @@
-import VDomNode from './VDomNode';
+import VNode from './VNode';
 
 export default class VDom {
-  public virtRootNode: VDomNode;
+  public virtRootNode: VNode;
   public realRootNode: HTMLElement;
 
   constructor(rootNode: HTMLElement) {
-    this.virtRootNode = VDomNode.fromHTMLElement(rootNode);
+    this.virtRootNode = VNode.fromHTMLElement(rootNode);
     this.realRootNode = rootNode;
   }
 

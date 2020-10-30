@@ -1,5 +1,5 @@
-import IDomEvent from './IDomEvent';
+import IEvent from './IEvent';
 
 export default interface IEventHandler {
-  (event: IDomEvent): void;
+  (event: IEvent): void;
 }

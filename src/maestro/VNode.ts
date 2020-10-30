@@ -1,7 +1,7 @@
-import IDomEvent from './IDomEvent';
+import IEvent from './IEvent';
 import fnv_1 from './helpers/fnv';
 
-type VDomNodeProps = {
+type VNodeProps = {
   tagName: string;
   textContent?: string;
   nodeValue?: string;
@@ -10,17 +10,17 @@ type VDomNodeProps = {
   className?: string[];
   props?: Map<string, string>;
   key?: number;
-  eventHandlers?: IDomEvent[];
+  eventHandlers?: IEvent[];
   tainted?: boolean;
-  parent?: VDomNode;
-  children?: VDomNode[];
+  parent?: VNode;
+  children?: VNode[];
 };
 
 /**
  * This is the most basic structure within maestro it represents a single VDOM node ie a HTML element
  * note on direct usage: use the setter methods to set the properties of a node to ensure it will be marked as tainted
  */
-export default class VDomNode {
+export default class VNode {
   private rendered: HTMLElement | null = null;
   private key: number;
   private tainted: boolean;
@@ -31,11 +31,11 @@ export default class VDomNode {
   private _htmlId: string[] | undefined;
   private _className: string[] | undefined;
   private _props: Map<string, string> | undefined;
-  private _eventHandlers: IDomEvent[] | undefined;
-  private _parent: VDomNode | undefined;
-  private _children: VDomNode[] | undefined;
+  private _eventHandlers: IEvent[] | undefined;
+  private _parent: VNode | undefined;
+  private _children: VNode[] | undefined;
 
-  constructor(props: VDomNodeProps) {
+  constructor(props: VNodeProps) {
     let resolvedKey = 0;
     if (typeof props.key === 'string') {
       resolvedKey = this.hashString(props.key);
@@ -71,7 +71,7 @@ export default class VDomNode {
     return hash;
   }
 
-  public static walkToRoot(node: VDomNode): [VDomNode, number] {
+  public static walkToRoot(node: VNode): [VNode, number] {
     let at = node;
     let nth = 0;
     while (!at.isRoot) {
@@ -86,7 +86,7 @@ export default class VDomNode {
    * Add a child to the node
    * @param child the DomNode to add as a child to this node
    */
-  public appendChild(child: VDomNode): void {
+  public appendChild(child: VNode): void {
     if (!this.children) {
       this.children = [child];
     } else {
@@ -101,7 +101,7 @@ export default class VDomNode {
    * Change this node's parent, this will also add this node to the parent's child list
    * @param parent DomNode to set as the parent for this node
    */
-  public setParent(parent: VDomNode): void {
+  public setParent(parent: VNode): void {
     this.parent = parent;
     parent.appendChild(this);
   }
@@ -133,18 +133,18 @@ export default class VDomNode {
     return new Map<string, string>(Array(attrs.length).map((i) => [attrs[i].name, attrs[i].value]));
   }
 
-  public static fromHTMLElement(elem: HTMLElement): VDomNode {
-    let props: VDomNodeProps = {
+  public static fromHTMLElement(elem: HTMLElement): VNode {
+    const props: VNodeProps = {
       tagName: elem.tagName.toLowerCase(),
       textContent: elem.textContent || undefined,
       nodeValue: elem.nodeValue || undefined,
       innerText: elem.innerText || undefined,
       htmlId: elem.id.split(' '),
       className: elem.className.split(' '),
-      props: elem.hasAttributes() ? VDomNode.attributesToProps(elem.attributes) : undefined,
+      props: elem.hasAttributes() ? VNode.attributesToProps(elem.attributes) : undefined,
     };
 
-    return new VDomNode(props);
+    return new VNode(props);
   }
 
   get tagName() {
@@ -205,7 +205,7 @@ export default class VDomNode {
     return this._eventHandlers;
   }
 
-  set eventHandlers(value: IDomEvent[] | undefined) {
+  set eventHandlers(value: IEvent[] | undefined) {
     this._eventHandlers = value;
     this.tainted = true;
   }
@@ -214,7 +214,7 @@ export default class VDomNode {
     return this._parent;
   }
 
-  set parent(value: VDomNode | undefined) {
+  set parent(value: VNode | undefined) {
     this._parent = value;
     this.tainted = true;
   }
@@ -223,7 +223,7 @@ export default class VDomNode {
     return this._children;
   }
 
-  set children(value: VDomNode[] | undefined) {
+  set children(value: VNode[] | undefined) {
     this._children = value;
     this.tainted = true;
   }
