@@ -85,4 +85,18 @@ describe('VDomNode', () => {
     node.children = [new VDomNode('div')];
     expect(node.isTainted()).toBe(true);
   });
+  it('should have getters working properly', () => {
+    const parent = new VDomNode('div');
+    const child = new VDomNode('div');
+    const node = new VDomNode('div', 'Text Content', 'Node Value', 'Inner Text', ['html', 'id'], ['class', 'name'], undefined, undefined, [], false, parent, [child]);
+    expect(node.tagName).toBe('div');
+    expect(node.textContent).toBe('Text Content');
+    expect(node.nodeValue).toBe('Node Value');
+    expect(node.innerText).toBe('Inner Text');
+    expect(node.htmlId).toEqual(['html', 'id']);
+    expect(node.className).toEqual(['class', 'name']);
+    expect(node.eventHandlers).toEqual([]);
+    expect(node.parent).toEqual(parent);
+    expect(node.children).toEqual([child]);
+  });
 });
