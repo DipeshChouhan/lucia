@@ -88,6 +88,9 @@ export default class VDomNode {
     this.rendered.innerText = this.innerText || '';
     this.rendered.textContent = this.textContent || null;
     this.rendered.nodeValue = this.nodeValue || null;
+    this.children?.forEach((child) => {
+      this.rendered!.appendChild(child.render());
+    });
     this.clean = true;
     this.tainted = false;
     return this.rendered;
