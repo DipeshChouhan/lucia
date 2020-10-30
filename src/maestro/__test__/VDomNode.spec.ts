@@ -123,4 +123,14 @@ describe('VDomNode', () => {
     expect(node.htmlId).toEqual(['html', 'id']);
     expect(node.className).toEqual(['class', 'name']);
   });
+  it('should render properly', () => {
+    const node = new VDomNode('div', 'Text Content', 'Node Value', 'Inner Text', ['html', 'id'], ['class', 'name'], undefined, undefined, [], false);
+    const elem = document.createElement('div');
+    elem.textContent = 'Text Content';
+    elem.nodeValue = 'Node Value';
+    elem.innerText = 'Inner Text';
+    elem.id = 'html id';
+    elem.className = 'class name';
+    expect(node.render()).toEqual(elem);
+  });
 });
