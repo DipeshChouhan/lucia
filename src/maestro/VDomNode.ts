@@ -12,13 +12,13 @@ type VDomNodeProps = {
   key?: number;
   eventHandlers?: IDomEvent[];
   tainted?: boolean;
-  clean?: boolean;
   parent?: VDomNode;
   children?: VDomNode[];
 };
 
 /**
  * This is the most basic structure within maestro it represents a single VDOM node ie a HTML element
+ * note on direct usage: use the setter methods to set the properties of a node to ensure it will be marked as tainted
  */
 export default class VDomNode {
   private rendered: HTMLElement | null = null;
@@ -55,7 +55,7 @@ export default class VDomNode {
     this._eventHandlers = props.eventHandlers;
     this._parent = props.parent;
     this._children = props.children;
-    this.tainted = props.tainted || true;
+    this.tainted = typeof props.tainted !== 'undefined' ? props.tainted : true;
     this.key = resolvedKey;
   }
 
@@ -69,6 +69,17 @@ export default class VDomNode {
     const strCodes = str.split('').map((c) => c.codePointAt(0)!);
     const hash = fnv_1(strCodes);
     return hash;
+  }
+
+  public static walkToRoot(node: VDomNode): [VDomNode, number] {
+    let at = node;
+    let nth = 0;
+    while (!at.isRoot) {
+      nth++;
+      at = node.parent!;
+    }
+
+    return [at, nth];
   }
 
   /**

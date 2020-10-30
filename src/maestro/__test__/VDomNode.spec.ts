@@ -139,7 +139,6 @@ describe('VDomNode', () => {
       props: undefined,
       key: undefined,
       eventHandlers: [],
-      tainted: false,
     });
     const elem = document.createElement('div');
     elem.textContent = 'Text Content';
