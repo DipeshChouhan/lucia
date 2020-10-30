@@ -29,6 +29,9 @@ export default class VDomNode {
   private _htmlId: string[] | undefined;
   private _className: string[] | undefined;
   private _props: Map<string, string> | undefined;
+  private _eventHandlers: IDomEvent[] | undefined;
+  private _parent: VDomNode | undefined;
+  private _children: VDomNode[] | undefined;
 
   constructor(
     tagName: string,
@@ -39,11 +42,11 @@ export default class VDomNode {
     className?: string[],
     props?: Map<string, string>,
     public key?: number,
-    public eventHandlers?: IDomEvent[],
+    eventHandlers?: IDomEvent[],
     private tainted: boolean = false,
     private clean: boolean = false,
-    public parent?: VDomNode,
-    public children?: VDomNode[]
+    parent?: VDomNode,
+    children?: VDomNode[]
   ) {
     this._tagName = tagName;
     this._textContent = textContent;
@@ -52,10 +55,13 @@ export default class VDomNode {
     this._htmlId = htmlId;
     this._className = className;
     this._props = props;
+    this._eventHandlers = eventHandlers;
+    this._parent = parent;
+    this._children = children;
   }
 
   public isLeaf = () => !this.children;
-  public isRoot = () => !this.parent;
+  public isRoot = () => !this._parent;
   public needsRender = () => !this.clean || this.tainted;
   public isTainted = () => this.tainted;
   // TODO: figure out what to hash
@@ -114,6 +120,33 @@ export default class VDomNode {
     this.tainted = true;
   }
 
+  get eventHandlers() {
+    return this._eventHandlers;
+  }
+
+  set eventHandlers(value: IDomEvent[] | undefined) {
+    this._eventHandlers = value;
+    this.tainted = true;
+  }
+
+  get parent() {
+    return this._parent;
+  }
+
+  set parent(value: VDomNode | undefined) {
+    this._parent = value;
+    this.tainted = true;
+  }
+
+  get children() {
+    return this._children;
+  }
+
+  set children(value: VDomNode[] | undefined) {
+    this._children = value;
+    this.tainted = true;
+  }
+
   /**
    * Add a child to the node
    * @param child the DomNode to add as a child to this node
@@ -127,8 +160,6 @@ export default class VDomNode {
 
     // Make this node the parent of the added child
     child.parent = this;
-    // Mark this node as tainted
-    this.tainted = true;
   }
 
   /**
