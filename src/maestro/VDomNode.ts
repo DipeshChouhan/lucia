@@ -99,6 +99,7 @@ export default class VDomNode {
 
   set innerText(value: string | undefined) {
     this._innerText = value;
+    this.tainted = true;
   }
 
   get htmlId() {
