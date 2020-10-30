@@ -60,7 +60,7 @@ export default class VDomNode {
   }
 
   public isLeaf = () => !this.children;
-  public isRoot = () => !this._parent;
+  public isRoot = () => !this.parent;
   public needsRender = () => this.tainted;
   public isTainted = () => this.tainted;
   // TODO: figure out what to hash
