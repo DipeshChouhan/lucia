@@ -22,13 +22,13 @@ type VDomNodeProps = {
  */
 export default class VDomNode {
   private rendered: HTMLElement | null = null;
-  private tagName: string;
-  private textContent: string | undefined;
-  private nodeValue: string | undefined;
-  private innerText: string | undefined;
-  private htmlId: string[] | undefined;
-  private className: string[] | undefined;
-  private props: Map<string, string> | undefined;
+  private _tagName: string;
+  private _textContent: string | undefined;
+  private _nodeValue: string | undefined;
+  private _innerText: string | undefined;
+  private _htmlId: string[] | undefined;
+  private _className: string[] | undefined;
+  private _props: Map<string, string> | undefined;
 
   constructor(
     tagName: string,
@@ -45,13 +45,13 @@ export default class VDomNode {
     public parent?: VDomNode,
     public children?: VDomNode[]
   ) {
-    this.tagName = tagName;
-    this.textContent = textContent;
-    this.nodeValue = nodeValue;
-    this.innerText = innerText;
-    this.htmlId = htmlId;
-    this.className = className;
-    this.props = props;
+    this._tagName = tagName;
+    this._textContent = textContent;
+    this._nodeValue = nodeValue;
+    this._innerText = innerText;
+    this._htmlId = htmlId;
+    this._className = className;
+    this._props = props;
   }
 
   public isLeaf = () => !this.children;
@@ -60,6 +60,59 @@ export default class VDomNode {
   public isTainted = () => this.tainted;
   // TODO: figure out what to hash
   public uniqueKey = () => this.key || fnv_1([0]);
+
+  get tagName() {
+    return this._tagName;
+  }
+
+  set tagName(value: string) {
+    this._tagName = value;
+    this.tainted = true;
+  }
+
+  get textContent() {
+    return this._textContent;
+  }
+
+  set textContent(value: string | undefined) {
+    this._textContent = value;
+    this.tainted = true;
+  }
+
+  get nodeValue() {
+    return this._nodeValue;
+  }
+
+  set nodeValue(value: string | undefined) {
+    this._nodeValue = value;
+    this.tainted = true;
+  }
+
+  get innerText() {
+    return this._innerText;
+  }
+
+  set innerText(value: string | undefined) {
+    this._innerText = value;
+  }
+
+  get htmlId() {
+    return this._htmlId;
+  }
+
+  set htmlId(value: string[] | undefined) {
+    this._htmlId = value;
+    this.tainted = true;
+  }
+
+  get className() {
+    return this._className;
+  }
+
+  set className(value: string[] | undefined) {
+    this._className = value;
+    this.tainted = true;
+  }
 
   /**
    * Add a child to the node
@@ -94,15 +147,15 @@ export default class VDomNode {
     if (!this.needsRender) {
       return this.rendered!;
     }
-    this.rendered = document.createElement(this.tagName);
-    this.rendered.id = this.htmlId?.join(' ') || this.uniqueKey.toString();
-    this.rendered.className = this.className?.join(' ') || '';
-    this.props?.forEach((k, v) => {
+    this.rendered = document.createElement(this._tagName);
+    this.rendered.id = this._htmlId?.join(' ') || this.uniqueKey.toString();
+    this.rendered.className = this._className?.join(' ') || '';
+    this._props?.forEach((k, v) => {
       this.rendered!.setAttribute(k, v);
     });
     this.rendered.innerText = this.innerText || '';
-    this.rendered.textContent = this.textContent || null;
-    this.rendered.nodeValue = this.nodeValue || null;
+    this.rendered.textContent = this._textContent || null;
+    this.rendered.nodeValue = this._nodeValue || null;
     this.children?.forEach((child) => {
       this.rendered!.appendChild(child.render());
     });
