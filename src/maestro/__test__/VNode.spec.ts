@@ -107,7 +107,7 @@ describe('VNode', () => {
     expect(node.textContent).toBe('Text Content');
     expect(node.nodeValue).toBe('Node Value');
     expect(node.innerText).toBe('Inner Text');
-    expect(node.htmlId).toEqual(['html', 'id']);
+    expect(node.htmlId).toEqual('id');
     expect(node.className).toEqual(['class', 'name']);
     expect(node.eventHandlers).toEqual([]);
     expect(node.parent).toEqual(parent);
@@ -126,7 +126,7 @@ describe('VNode', () => {
     expect(node.textContent).toBe('Text Content');
     expect(node.nodeValue).toBe(undefined);
     expect(node.innerText).toBe('Inner Text');
-    expect(node.htmlId).toEqual(['html', 'id']);
+    expect(node.htmlId).toEqual('id');
     expect(node.className).toEqual(['class', 'name']);
   });
   it('should render properly', () => {
