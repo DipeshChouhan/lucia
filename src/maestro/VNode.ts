@@ -148,18 +148,18 @@ export default class VNode {
       this.rendered!.appendChild(child.render());
     });
     this.tainted = false;
-    if (!this.isLeaf) {
-      this.children?.forEach(c => {
-        // TODO: this is very crude still look into improvements here
-        this.rendered!.appendChild(c.render());
-      });
-    }
+    // if (!this.isLeaf) {
+    //   this.children?.forEach(c => {
+    //     // TODO: this is very crude still look into improvements here
+    //     this.rendered!.appendChild(c.render());
+    //   });
+    // }
     return this.rendered;
   }
 
-  public static eq(left: VNode, right:VNode) {
-    // TODO: figure out how to compare or bite the bullet and do kpk comp
-  }
+  // public static eq(left: VNode, right:VNode) {
+  //   // TODO: figure out how to compare or bite the bullet and do kpk comp
+  // }
 
   private static attributesToProps(attrs: NamedNodeMap): Map<string, string>[] {
     const props = [new Map<string, string>(), new Map<string, string>()];
