@@ -148,12 +148,12 @@ export default class VNode {
       this.rendered!.appendChild(child.render());
     });
     this.tainted = false;
-    // if (!this.isLeaf) {
-    //   this.children?.forEach(c => {
-    //     // TODO: this is very crude still look into improvements here
-    //     this.rendered!.appendChild(c.render());
-    //   });
-    // }
+    if (!this.isLeaf) {
+      this.children?.forEach(c => {
+        // TODO: this is very crude still look into improvements here
+        this.rendered!.appendChild(c.render());
+      });
+    }
     return this.rendered;
   }
 
