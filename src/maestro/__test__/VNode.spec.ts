@@ -118,7 +118,7 @@ describe('VNode', () => {
     elem.textContent = 'Text Content';
     elem.nodeValue = 'Node Value';
     elem.innerText = 'Inner Text';
-    elem.id = 'html id';
+    elem.id = 'id';
     elem.className = 'class name';
     elem.hasAttributes = () => false;
     const node = VNode.fromHTMLElement(elem);
@@ -146,7 +146,7 @@ describe('VNode', () => {
     elem.textContent = 'Text Content';
     elem.nodeValue = 'Node Value';
     elem.innerText = 'Inner Text';
-    elem.id = 'html id';
+    elem.id = 'id';
     elem.className = 'class name';
     expect(node.render()).toEqual(elem);
   });

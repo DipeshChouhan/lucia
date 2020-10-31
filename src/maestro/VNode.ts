@@ -78,7 +78,7 @@ export default class VNode {
     this._eventHandlers = eventHandlers;
     this._parent = parent;
     this._children = children;
-    this.tainted = tainted || true;
+    this.tainted = tainted ?? true;
   }
 
   public isLeaf = () => !this.children;
