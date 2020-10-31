@@ -37,23 +37,22 @@ export default class VNode {
   private _parent: VNode | undefined;
   private _children: VNode[] | undefined;
 
-  constructor(options: VNodeProps) {
+  constructor({
+    key,
+    tagName,
+    textContent,
+    nodeValue,
+    innerText,
+    htmlId,
+    className,
+    directives,
+    props,
+    eventHandlers,
+    parent,
+    children,
+    tainted,
+  }: VNodeProps) {
     let resolvedKey = 0;
-    const {
-      key,
-      tagName,
-      textContent,
-      nodeValue,
-      innerText,
-      htmlId,
-      className,
-      directives,
-      props,
-      eventHandlers,
-      parent,
-      children,
-      tainted,
-    } = options;
     if (typeof key === 'string') {
       resolvedKey = this.hashString(key);
     } else if (key) {
