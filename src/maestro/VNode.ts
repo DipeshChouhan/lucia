@@ -169,7 +169,7 @@ export default class VNode {
       nodeValue: elem.nodeValue || undefined,
       innerText: elem.innerText || undefined,
       htmlId: elem.id,
-      className: elem.className.split(' '),
+      className: elem.className.split(/ +/),
       directives: props ? props[0] : undefined,
       props: props ? props[1] : undefined,
     };
