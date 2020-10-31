@@ -70,7 +70,7 @@ describe('VNode', () => {
     node.innerText = 'Foobar!';
     expect(node.needsRender()).toBe(true);
     node = new VNode({ tagName: 'div' });
-    node.htmlId = ['id-here'];
+    node.htmlId = 'id-here';
     expect(node.needsRender()).toBe(true);
     node = new VNode({ tagName: 'div' });
     node.className = ['class-here'];
@@ -93,10 +93,11 @@ describe('VNode', () => {
       textContent: 'Text Content',
       nodeValue: 'Node Value',
       innerText: 'Inner Text',
-      htmlId: ['html', 'id'],
+      htmlId: 'id',
       className: ['class', 'name'],
       parent: parent,
       children: [child],
+      directives: undefined,
       props: undefined,
       key: undefined,
       eventHandlers: [],
@@ -134,8 +135,9 @@ describe('VNode', () => {
       textContent: 'Text Content',
       nodeValue: 'Node Value',
       innerText: 'Inner Text',
-      htmlId: ['html', 'id'],
+      htmlId: 'id',
       className: ['class', 'name'],
+      directives: undefined,
       props: undefined,
       key: undefined,
       eventHandlers: [],

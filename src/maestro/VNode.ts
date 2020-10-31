@@ -1,12 +1,12 @@
 import IEvent from './IEvent';
 import fnv_1 from './helpers/fnv';
 
-type VNodeProps = {
+type VNodeOptions = {
   tagName: string;
   textContent?: string;
   nodeValue?: string;
   innerText?: string;
-  htmlId?: string[];
+  htmlId?: string;
   className?: string[];
   directives?: Map<string, string>;
   props?: Map<string, string>;
@@ -29,7 +29,7 @@ export default class VNode {
   private _textContent: string | undefined;
   private _nodeValue: string | undefined;
   private _innerText: string | undefined;
-  private _htmlId: string[] | undefined;
+  private _htmlId: string | undefined;
   private _className: string[] | undefined;
   private _directives: Map<string, string> | undefined;
   private _props: Map<string, string> | undefined;
@@ -51,14 +51,13 @@ export default class VNode {
     parent,
     children,
     tainted,
-  }: VNodeProps) {
-    let resolvedKey = 0;
+  }: VNodeOptions) {
     if (typeof key === 'string') {
-      resolvedKey = this.hashString(key);
+      this.key = this.hashString(key);
     } else if (key) {
-      resolvedKey = key;
+      this.key = key;
     } else {
-      resolvedKey = fnv_1([0]);
+      this.key = fnv_1([0]);
     }
 
     this._tagName = tagName;
@@ -72,8 +71,7 @@ export default class VNode {
     this._eventHandlers = eventHandlers;
     this._parent = parent;
     this._children = children;
-    this.tainted = typeof tainted !== 'undefined' ? tainted : true;
-    this.key = resolvedKey;
+    this.tainted = tainted || true;
   }
 
   public isLeaf = () => !this.children;
@@ -83,7 +81,7 @@ export default class VNode {
   public uniqueKey = () => this.key;
 
   private hashString(str: string): number {
-    const strCodes = str.split('').map((c) => c.codePointAt(0)!);
+    const strCodes = str.split('').map((char) => char.codePointAt(0)!);
     const hash = fnv_1(strCodes);
     return hash;
   }
@@ -131,7 +129,7 @@ export default class VNode {
       return this.rendered!;
     }
     this.rendered = document.createElement(this._tagName);
-    this.rendered.id = this._htmlId?.join(' ') || this.uniqueKey.toString();
+    this.rendered.id = this._htmlId || this.uniqueKey.toString();
     this.rendered.className = this._className?.join(' ') || '';
     this.props?.forEach((k, v) => {
       this.rendered!.setAttribute(k, v);
@@ -165,12 +163,12 @@ export default class VNode {
   public static fromHTMLElement(elem: HTMLElement): VNode {
     const props = elem.hasAttributes() ? VNode.attributesToProps(elem.attributes) : undefined;
 
-    const options: VNodeProps = {
+    const options: VNodeOptions = {
       tagName: elem.tagName.toLowerCase(),
       textContent: elem.textContent || undefined,
       nodeValue: elem.nodeValue || undefined,
       innerText: elem.innerText || undefined,
-      htmlId: elem.id.split(' '),
+      htmlId: elem.id,
       className: elem.className.split(' '),
       directives: props ? props[0] : undefined,
       props: props ? props[1] : undefined,
@@ -219,7 +217,7 @@ export default class VNode {
     return this._htmlId;
   }
 
-  set htmlId(value: string[] | undefined) {
+  set htmlId(value: string | undefined) {
     this._htmlId = value;
     this.tainted = true;
   }
