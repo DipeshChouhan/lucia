@@ -8,6 +8,7 @@ type VNodeProps = {
   innerText?: string;
   htmlId?: string[];
   className?: string[];
+  directives?: Map<string, string>;
   props?: Map<string, string>;
   key?: number;
   eventHandlers?: IEvent[];
@@ -30,32 +31,49 @@ export default class VNode {
   private _innerText: string | undefined;
   private _htmlId: string[] | undefined;
   private _className: string[] | undefined;
+  private _directives: Map<string, string> | undefined;
   private _props: Map<string, string> | undefined;
   private _eventHandlers: IEvent[] | undefined;
   private _parent: VNode | undefined;
   private _children: VNode[] | undefined;
 
-  constructor(props: VNodeProps) {
+  constructor(options: VNodeProps) {
     let resolvedKey = 0;
-    if (typeof props.key === 'string') {
-      resolvedKey = this.hashString(props.key);
-    } else if (props.key) {
-      resolvedKey = props.key;
+    const {
+      key,
+      tagName,
+      textContent,
+      nodeValue,
+      innerText,
+      htmlId,
+      className,
+      directives,
+      props,
+      eventHandlers,
+      parent,
+      children,
+      tainted,
+    } = options;
+    if (typeof key === 'string') {
+      resolvedKey = this.hashString(key);
+    } else if (key) {
+      resolvedKey = key;
     } else {
       resolvedKey = fnv_1([0]);
     }
 
-    this._tagName = props.tagName;
-    this._textContent = props.textContent;
-    this._nodeValue = props.nodeValue;
-    this._innerText = props.innerText;
-    this._htmlId = props.htmlId;
-    this._className = props.className;
-    this._props = props.props;
-    this._eventHandlers = props.eventHandlers;
-    this._parent = props.parent;
-    this._children = props.children;
-    this.tainted = typeof props.tainted !== 'undefined' ? props.tainted : true;
+    this._tagName = tagName;
+    this._textContent = textContent;
+    this._nodeValue = nodeValue;
+    this._innerText = innerText;
+    this._htmlId = htmlId;
+    this._className = className;
+    this._directives = directives;
+    this._props = props;
+    this._eventHandlers = eventHandlers;
+    this._parent = parent;
+    this._children = children;
+    this.tainted = typeof tainted !== 'undefined' ? tainted : true;
     this.key = resolvedKey;
   }
 
@@ -129,22 +147,37 @@ export default class VNode {
     return this.rendered;
   }
 
-  private static attributesToProps(attrs: NamedNodeMap): Map<string, string> {
-    return new Map<string, string>(Array(attrs.length).map((i) => [attrs[i].name, attrs[i].value]));
+  private static attributesToProps(attrs: NamedNodeMap): Map<string, string>[] {
+    const props = [new Map<string, string>(), new Map<string, string>()];
+
+    for (let i = 0; i < attrs.length; i++) {
+      const { name, value } = attrs[i];
+
+      if (name.startsWith('l-')) {
+        props[0].set(name, value);
+      } else {
+        props[1].set(name, value);
+      }
+    }
+
+    return props;
   }
 
   public static fromHTMLElement(elem: HTMLElement): VNode {
-    const props: VNodeProps = {
+    const props = elem.hasAttributes() ? VNode.attributesToProps(elem.attributes) : undefined;
+
+    const options: VNodeProps = {
       tagName: elem.tagName.toLowerCase(),
       textContent: elem.textContent || undefined,
       nodeValue: elem.nodeValue || undefined,
       innerText: elem.innerText || undefined,
       htmlId: elem.id.split(' '),
       className: elem.className.split(' '),
-      props: elem.hasAttributes() ? VNode.attributesToProps(elem.attributes) : undefined,
+      directives: props ? props[0] : undefined,
+      props: props ? props[1] : undefined,
     };
 
-    return new VNode(props);
+    return new VNode(options);
   }
 
   get tagName() {
@@ -226,6 +259,10 @@ export default class VNode {
   set children(value: VNode[] | undefined) {
     this._children = value;
     this.tainted = true;
+  }
+
+  get directives() {
+    return this._directives;
   }
 
   get props() {
