@@ -1,6 +1,14 @@
 import IEvent from './IEvent';
 import fnv_1 from './helpers/fnv';
 
+/**
+ * This is the prefix used separate directives from properties
+ * since this project aim is to be generic but was built 
+ * primarily for use with lucia the default is 'l-' but
+ * this should be changed at build time for uses other than lucia.
+ */
+const DIRECTIVE_PREFIX = 'l-';
+
 type VNodeOptions = {
   tagName: string;
   textContent?: string;
@@ -19,7 +27,6 @@ type VNodeOptions = {
 
 /**
  * This is the most basic structure within maestro it represents a single VDOM node ie a HTML element
- * note on direct usage: use the setter methods to set the properties of a node to ensure it will be marked as tainted
  */
 export default class VNode {
   private rendered: HTMLElement | null = null;
@@ -141,7 +148,17 @@ export default class VNode {
       this.rendered!.appendChild(child.render());
     });
     this.tainted = false;
+    if (!this.isLeaf) {
+      this.children?.forEach(c => {
+        // TODO: this is very crude still look into improvements here
+        this.rendered!.appendChild(c.render());
+      });
+    }
     return this.rendered;
+  }
+
+  public static eq(left: VNode, right:VNode) {
+    // TODO: figure out how to compare or bite the bullet and do kpk comp
   }
 
   private static attributesToProps(attrs: NamedNodeMap): Map<string, string>[] {
@@ -150,7 +167,7 @@ export default class VNode {
     for (let i = 0; i < attrs.length; i++) {
       const { name, value } = attrs[i];
 
-      if (name.startsWith('l-')) {
+      if (name.startsWith(DIRECTIVE_PREFIX)) {
         props[0].set(name, value);
       } else {
         props[1].set(name, value);
@@ -177,6 +194,7 @@ export default class VNode {
     return new VNode(options);
   }
 
+  //#region propsGetSet
   get tagName() {
     return this._tagName;
   }
@@ -265,4 +283,5 @@ export default class VNode {
   get props() {
     return this._props;
   }
+  //#endregion propsGetSet
 }
