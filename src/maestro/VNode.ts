@@ -3,7 +3,7 @@ import fnv_1 from './helpers/fnv';
 
 /**
  * This is the prefix used separate directives from properties
- * since this project aim is to be generic but was built 
+ * since this project aim is to be generic but was built
  * primarily for use with lucia the default is 'l-' but
  * this should be changed at build time for uses other than lucia.
  */
@@ -149,7 +149,7 @@ export default class VNode {
     });
     this.tainted = false;
     if (!this.isLeaf) {
-      this.children?.forEach(c => {
+      this.children?.forEach((c) => {
         // TODO: this is very crude still look into improvements here
         this.rendered!.appendChild(c.render());
       });

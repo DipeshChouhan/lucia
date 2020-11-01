@@ -11,7 +11,7 @@
     "build:docs": "typedoc --out docs src",
     "test": "jest --coverage",
     "cleanup": "prettier -w src",
-    "coverage" : "cat ./coverage/lcov.info | coveralls"
+    "coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "@rollup/plugin-node-resolve": "8.0.1",
     "coveralls": "^3.1.0",
     "del-cli": "^3.0.1",
+    "husky": "^5.0.0-beta.0",
     "jest": "^26.6.1",
     "prettier": "^2.1.2",
     "rollup": "2.15.0",
