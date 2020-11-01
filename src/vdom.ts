@@ -1,3 +1,4 @@
+import compute from './helpers/compute';
 import observer from './observer';
 import renderDirective from './directives';
 import { getSelector, getProps } from './helpers/selector';
@@ -99,7 +100,8 @@ class VDom {
         if (
           keys.some((key) => value.toString().includes(key)) ||
           Object.keys(view).some((key: string) => {
-            return typeof view[key] === 'function' && view[key].toString().includes(`this.${key}`);
+            // Needs correct comparison for deps
+            return typeof view[key] === 'function' /* && view[key].toString().includes(`this.${key}`) */;
           })
         ) {
           affectedDirectives.push(name);
