@@ -43,6 +43,7 @@ Lucia relies on directives in markup to perform functions. You can view more in 
 | Directive                                                           | Description                                                                             |
 | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | [`l-use`](https://lucia.js.org/docs/features/)                      | Declares a new component scope.                                                         |
+| [`l-init`](https://lucia.js.org/docs/features/)                     | Declares and automatically initializes a new component scope.                           |
 | [`l-text`](https://lucia.js.org/docs/features/declarativeRendering) | Works similarly to `l-bind`, but will update the `textContent` of an element.           |
 | [`l-html`](https://lucia.js.org/docs/features/declarativeRendering) | Works similarly to `l-bind`, but will update the `innerHTML` of an element.             |
 | [`l-if`](https://lucia.js.org/docs/features/conditionals)           | Toggles `display: none;` on the element depending on expression (true or false).        |
