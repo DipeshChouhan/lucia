@@ -7,6 +7,7 @@ yarn-error.log
 # Testing
 test.html
 coverage
+.husky/
 
 # Build Configs
 tsconfig.json
