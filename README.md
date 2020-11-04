@@ -32,7 +32,7 @@ Below is an example of a clicker game in Lucia. No, your eyes aren't fooling you
 
 ```html
 <div l-use="{ count: 0 }">
-  <button l-text="count" l-on:click="++count">0</button>
+  <button l-text="this.count" l-on:click="++this.count">0</button>
 </div>
 ```
 
