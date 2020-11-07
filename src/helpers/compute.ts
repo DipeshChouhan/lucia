@@ -3,7 +3,7 @@ const computeProperties = (
   view: unknown = {},
   returnable: boolean = true
 ): any => {
-  return new Function(`with(this) {${returnable ? `return ${expression}` : expression}}`).bind(
+  return new Function(`${returnable ? `return ${expression}` : expression}`).bind(
     view
   )();
 };
