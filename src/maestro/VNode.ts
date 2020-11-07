@@ -104,6 +104,35 @@ export default class VNode {
     return [at, nth];
   }
 
+  // Unfinished unnecessary equals method
+
+  // public equals(node: VNode): boolean {
+  //   if (this.tagName !== node.tagName) return false;
+  //   if (this.textContent !== node.textContent) return false;
+  //   if (this.nodeValue !== node.nodeValue) return false;
+  //   if (this.innerText !== node.innerText) return false;
+  //   if (this.htmlId !== node.htmlId) return false;
+  //   if (this.className !== node.className) return false;
+  //   if (this.directives !== node.directives) return false;
+  //   if (this.props !== node.props) return false;
+  //   if (this.eventHandlers !== node.eventHandlers) return false;
+  //   if (this.parent !== node.parent) return false;
+
+  //   if (this.children !== undefined && node.children !== undefined) {
+  //     if (!arrayEquals(this.children, node.children)) return false;
+  //   } else if (this.children !== undefined || node.children !== undefined) {
+  //     return false;
+  //   }
+
+  //   if (this.children !== undefined && node.children !== undefined) {
+  //     if (!arrayEquals(this.children, node.children)) return false;
+  //   } else if (this.children !== undefined || node.children !== undefined) {
+  //     return false;
+  //   }
+  //// maybe use JSON.stringify
+  //   return true;
+  // }
+
   /**
    * Add a child to the node
    * @param child the DomNode to add as a child to this node
@@ -117,6 +146,12 @@ export default class VNode {
 
     // Make this node the parent of the added child
     child.parent = this;
+  }
+
+  public removeChild(index: number): void {
+    if (this.children) {
+      delete this.children[index];
+    }
   }
 
   /**

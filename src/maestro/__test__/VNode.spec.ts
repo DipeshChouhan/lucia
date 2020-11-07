@@ -150,4 +150,33 @@ describe('VNode', () => {
     elem.className = 'class name';
     expect(node.render()).toEqual(elem);
   });
+  it('should remove child node properly', () => {
+    const node1 = new VNode({
+      tagName: 'div',
+      textContent: 'Text Content',
+      nodeValue: 'Node Value',
+      innerText: 'Inner Text',
+      htmlId: 'id',
+      className: ['class', 'name'],
+      directives: undefined,
+      props: undefined,
+      key: undefined,
+      eventHandlers: [],
+    });
+    const node2 = new VNode({
+      tagName: 'div',
+      textContent: 'Text Content',
+      nodeValue: 'Node Value',
+      innerText: 'Inner Text',
+      htmlId: 'id',
+      className: ['class', 'name'],
+      directives: undefined,
+      props: undefined,
+      key: undefined,
+      eventHandlers: [],
+    });
+    node1.appendChild(node2);
+    node1.removeChild(0);
+    expect(node1.children).toEqual(undefined);
+  });
 });
