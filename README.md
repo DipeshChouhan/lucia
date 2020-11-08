@@ -56,12 +56,11 @@ Lucia relies on directives in markup to perform functions. You can view more in 
 
 If you're looking for something production-ready and is widely that has a API and goal similar to Lucia, check these projects out!
 
-| Project                                                                                                                                                                                                                                                     | Description                                                                                       |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/vue?label=vue)](https://github.com/vuejs/vue)                                                                                                                                           | Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web. |
-| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/alpinejs?label=alpinejs)](https://github.com/alpinejs/alpine)                                                                                                                           | A rugged, minimal framework for composing JavaScript behavior in your markup.                     |
-| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/stimulus?label=stimulus)](https://github.com/stimulusjs/stimulus)                                                                                                                       | A modest JavaScript framework for the HTML you already have.                                      |
-| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/moon?label=moon)](https://github.com/kbrsh/moon) + [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/moon-browser?label=moon-browser)](https://github.com/kbrsh/moon) | The minimal & fast library for functional user interfaces                                         |
+| Project                                                                                                                               | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/vue?label=vue)](https://github.com/vuejs/vue)                     | Vue.js is a progressive, incrementally-adoptable JavaScript framework for building UI on the web. |
+| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/alpinejs?label=alpinejs)](https://github.com/alpinejs/alpine)     | A rugged, minimal framework for composing JavaScript behavior in your markup.                     |
+| [![Code Size](https://badgen.net/badgesize/brotli/https://unpkg.com/stimulus?label=stimulus)](https://github.com/stimulusjs/stimulus) | A modest JavaScript framework for the HTML you already have.                                      |
 
 ## License
 
