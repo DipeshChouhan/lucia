@@ -177,6 +177,6 @@ describe('VNode', () => {
     });
     node1.appendChild(node2);
     node1.removeChild(0);
-    expect(node1.children).toEqual(undefined);
+    expect(node1.children).toEqual([undefined]);
   });
 });
