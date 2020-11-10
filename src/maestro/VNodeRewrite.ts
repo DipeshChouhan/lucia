@@ -13,7 +13,7 @@ export interface VNodeProps {
   ns?: string;
 }
 
-const ns = (props: VNodeProps, children: VNode[] | undefined, tag: string | undefined): void => {
+const ns = (props: VNodeProps, children: VNode[], tag: string): void => {
   props.ns = 'http://www.w3.org/2000/svg';
   if (tag !== 'foreignObject' && children !== undefined) {
     for (const child of children) {
