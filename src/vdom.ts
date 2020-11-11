@@ -97,7 +97,7 @@ class VDom {
       for (const name in directives) {
         const value = directives[name];
         if (
-          keys.some((key) => value.toString().includes(key)) ||
+          keys.some((key) => value.toString().includes(`this.${key}`)) ||
           Object.keys(view).some((key: string) => {
             // Needs correct comparison for deps
             return (
